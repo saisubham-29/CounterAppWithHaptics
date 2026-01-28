@@ -15,10 +15,14 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.content.Context;
 
+import com.google.android.material.progressindicator.CircularProgressIndicator;
+
 public class MainActivity extends AppCompatActivity {
     ConstraintLayout main;
-    TextView counterVar;
+    TextView counterVar,mala_count;
+    CircularProgressIndicator progress;
     private int count=0;
+    int mala=1;
     Button reset;
 
     @Override
@@ -31,13 +35,20 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+         progress = findViewById(R.id.progressbar);
         main= findViewById(R.id.main);
         counterVar= findViewById(R.id.counterNumbertxt);
         reset = findViewById(R.id.resetbtn);
+        mala_count=findViewById(R.id.mala_count);
         main.setOnClickListener(v -> {
             count++;
+            if(count==108){
+                mala++;
+                mala_count.setText(String.valueOf(mala));
+                reset();
+            }
             counterVar.setText(String.valueOf(count));
-            
+            progress.setProgressCompat(count, true);
             Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
@@ -46,10 +57,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         reset.setOnClickListener(v -> {
-            count=0;
-            counterVar.setText(String.valueOf(count));
+            reset();
         });
 
+    }
+    public void reset(){
+        count=0;
+        progress.setProgressCompat(count, true);
+        counterVar.setText(String.valueOf(count));
     }
 
 
