@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     .setAudioAttributes(audioAttributes)
                     .build();
         } else {
-            soundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
+            soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         }
 
         hareKrishnaSound = soundPool.load(this, R.raw.harekrishna, 1);
